@@ -1,4 +1,4 @@
-# Svelte Webpack Starter
+# Svelte Typescript Webpack Starter
 
 A starter template for [Svelte](https://svelte.dev) that comes preconfigured with Webpack, TypeScript, SCSS, Babel,
 Autoprefixer, and HMR.
@@ -46,11 +46,19 @@ to the app, which is usually `http://localhost:8080/`:
 ```bash
 npm run dev
 ```
+### Building for development
+
+Run the `build` script to bundle the app for production. The bundle will be created at `/public/build/` and the `public`
+directory will contain all files you need to host the app. It formats, runs lint check and validates for svelte before building for development:
+
+```bash
+npm run build:dev
+```
 
 ### Building for production
 
 Run the `build` script to bundle the app for production. The bundle will be created at `/public/build/` and the `public`
-directory will contain all files you need to host the app:
+directory will contain all files you need to host the app.It formats, runs lint check and validates for svelte before building for production:
 
 ```bash
 npm run build
@@ -172,4 +180,42 @@ path from anywhere in the project instead of using a large number of `..` to tra
 
 ```ts
 import { users } from 'src/stores/users';
+```
+
+### Jest Testing
+
+Add tests in src/\_\_test\_\_ directory.
+
+```json
+"scripts": {
+    "test": "jest",
+    "test:watch": "npm test --watch",
+}
+```
+
+### Husky Precommit
+
+Configured with precommit hook. Runs the production build.
+
+```json
+"husky": {
+		"hooks": {
+			"pre-commit": " echo 'staging' lint-staged"
+		}
+	},
+	"lint-staged": {
+		"*.{js,ts,css,md,svelte}": "prettier --write"
+	}
+```
+
+### ESLINT
+
+Configured with eslint and eslint-plugin-svelte3.
+
+```json
+"scripts": {
+    "lint": "eslint './src/**/*.{js,ts,svelte}'",
+		"lint:fix": "eslint --fix './src/**/*.{js,ts,svelte}'",
+		"prelint": "npm run format"
+}
 ```
